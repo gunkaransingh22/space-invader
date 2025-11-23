@@ -58,3 +58,23 @@ def fire_bullet(x, y):
      global bullet_state
      bullet_state = "fire"
      screen.blit(bulletImg, (x + 16, y + 10))
+def isCollision(enemyX, enemyY, bulletX, bulletY):
+     distance = math.sqrt((enemyX - bulletX)** 2 + (enemyY - bulletY) ** 2)
+     return distance < COLLISION_DISTANCE
+running = True
+while running:
+     screen.fill((0,0,0))
+     screen.blit(background, (0,0))
+     for event in pygame.event.get():
+          if event.type == pygame.QUIT:
+               running = False
+          if event.type == pygame.KEYDOWN:
+               if event.key == pygame.K_LEFT:
+                    playerX_change = -5
+               if event.key == pygame.K_RIGHT:
+                    playerX_change = 5
+               if event.key == pygame.K_SPACE and bullet_state == "ready":
+                       bulletX = playerX
+                       fire_bullet(bulletX,bulletY )
+          if event.type == pygame.KEYUP and event.key in [pygame.K_LEFT, pygame.K_RIGHT]:
+               playerX_change = 0
